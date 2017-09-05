@@ -1,0 +1,105 @@
+
+buildscript {
+    ext {
+        vertxVersion = '3.4.2'
+        problemVersion = '0.11.0'
+    }
+}
+
+plugins {
+  id 'net.researchgate.release' version '2.4.0'
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+
+repositories {
+    jcenter()
+}
+
+group = 'one.valuelogic'
+archivesBaseName = 'vertx-pico'
+
+dependencies {
+
+    compile "io.vertx:vertx-core:${vertxVersion}"
+    compile "org.picocontainer:picocontainer:2.15"
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.assertj:assertj-core:3.8.0'
+    testCompile "io.vertx:vertx-unit:${vertxVersion}"
+}
+
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'vertx-pico'
+                packaging 'jar'
+                artifactId 'vertx-pico'
+                description 'vertx integration with PicoContainer'
+                url 'https://github.com/valuelogic/vertx-pico'
+
+                scm {
+                    connection 'scm:git:https://github.com/valuelogic/vertx-pico.git'
+                    developerConnection 'scm:git:git@github.com:valuelogic/vertx-pico.git'
+                    url 'https://github.com/valuelogic/vertx-pico'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'dyk'
+                        name 'Przemek Dyk'
+                        email 'przemek.dyk@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+
