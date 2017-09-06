@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/valuelogic/vertx-env-config/tree/master.svg?style=shield&circle-token=b8213c61a7640e64c706501fccf59f2aa9bf4a86)](https://circleci.com/gh/valuelogic/vertx-env-config/tree/master)
+[![CircleCI](https://circleci.com/gh/valuelogic/vertx-pico/tree/master.svg?style=shield&circle-token=6de10fc4566df9ebd87b0eeea471e7f13386cb55)](https://circleci.com/gh/valuelogic/vertx-pico/tree/master)
 
 # Vertx PicoContainer verticle factory
 
