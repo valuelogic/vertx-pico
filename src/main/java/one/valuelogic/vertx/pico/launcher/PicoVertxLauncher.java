@@ -7,7 +7,7 @@ import io.vertx.core.VertxOptions;
 import one.valuelogic.vertx.pico.PicoVerticleFactory;
 
 public class PicoVertxLauncher extends Launcher {
-    private PicoAppBootstrap bootstrap;
+    protected PicoAppBootstrap bootstrap;
 
     public PicoVertxLauncher(PicoAppBootstrap bootstrap) {
         if (bootstrap == null ) {
